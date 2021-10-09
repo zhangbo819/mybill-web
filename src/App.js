@@ -1,14 +1,23 @@
 // import logo from './logo.svg';
-// import './App.css';
+import './App.css';
+import { Tabs } from 'antd';
+
 import Bill from './components/Bill'
-import Input from './components/Input'
+import Entering from './components/Entering'
+
+const { TabPane } = Tabs;
 
 function App() {
-  let active = 0
   return (
     <div>
-      {active == 0 ? <Input /> :
-        <Bill></Bill>}
+      <Tabs defaultActiveKey="1" centered>
+        <TabPane tab="录入" key="1">
+          <Entering />
+        </TabPane>
+        <TabPane tab="账本" key="2">
+          <Bill />
+        </TabPane>
+      </Tabs>
     </div>
   );
 }
