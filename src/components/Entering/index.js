@@ -28,7 +28,12 @@ export default class Entering extends React.PureComponent {
 
         console.log(date, details, num)
 
-        let data = localStorage.getItem('MBD') || ''
+        if (details === '' || num === '') {
+            message.error('请输入')
+            return
+        }
+
+        let data = localStorage.getItem('MBD')
 
         try {
             data = JSON.parse(data)
@@ -42,7 +47,14 @@ export default class Entering extends React.PureComponent {
 
         localStorage.setItem('MBD', JSON.stringify(data))
 
-        message.success('录入成功');
+        message.success({
+            // top: 500,
+            duration: 2,
+            maxCount: 3,
+            rtl: true,
+            content: '录入成功',
+            onClick: () => setTimeout(() => message.destroy())
+        });
 
         this.setState({
             details: '',
