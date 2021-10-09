@@ -41,6 +41,10 @@ export default class Entering extends React.PureComponent {
             data = []
         }
 
+        if (!Array.isArray(data)) {
+            data = []
+        }
+
         // console.log('data', data)
 
         data.push(`${date.getMonth() + 1}.${date.getDate()}@${details}@${num}`)
