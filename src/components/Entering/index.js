@@ -1,5 +1,6 @@
 import React from 'react'
-import { message, Button, Input, Col, Row, DatePicker } from 'antd';
+import { message, Button, Input, Col, Row, DatePicker, InputNumber } from 'antd';
+import { CarryOutOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 
@@ -16,16 +17,18 @@ export default class Entering extends React.PureComponent {
         this.refNum = React.createRef()
     }
 
-    handleInput = key => e => this.setState({ [key]: e.target.value })
+    handleInput = key => e => {
+        this.setState({ [key]: typeof e === 'object' ? e.target.value : e })
+    }
 
     onPressEnter = () => {
         // console.log(this.refNum.current)
-        this.refNum.current.focus()
+        this.refDetails.current.focus()
     }
 
     handleDatePickerChange = (e, s) => {
         // console.log(e.format(), s)
-        this.setState({ date: new Date(e.format()) })
+        this.setState({ date: new Date(e ? e.format() : Date.now()) })
     }
 
     handleSubmit = () => {
@@ -35,6 +38,11 @@ export default class Entering extends React.PureComponent {
 
         if (details === '' || num === '') {
             message.error('请输入')
+            if (details === '') {
+                this.refDetails.current.focus()
+            } else if (num === '') {
+                this.refNum.current.focus()
+            }
             return
         }
 
@@ -75,12 +83,22 @@ export default class Entering extends React.PureComponent {
     render() {
         const { date, details, num } = this.state
         return <div className="Entering">
-            <Row gutter={24} align="middle">
+            <Row gutter={24} style={{ marginTop: '12px' }} align="middle">
                 <Col span={8}>
+                    {/* <CarryOutOutlined /> */}
                     <h3>日期</h3>
                 </Col>
                 <Col span={16}>
                     <DatePicker value={moment(date)} onChange={this.handleDatePickerChange} />
+                </Col>
+            </Row>
+
+            <Row gutter={24} style={{ marginTop: '24px', marginBottom: '24px' }} align="middle">
+                <Col span={8}>
+                    <h3>金额</h3>
+                </Col>
+                <Col span={16}>
+                    <InputNumber ref={this.refNum} onChange={this.handleInput('num')} value={num} onPressEnter={this.onPressEnter} />
                 </Col>
             </Row>
 
@@ -89,20 +107,12 @@ export default class Entering extends React.PureComponent {
                     <h3>详情</h3>
                 </Col>
                 <Col span={16}>
-                    <Input ref={this.refDetails} onChange={this.handleInput('details')} autoFocus value={details} onPressEnter={this.onPressEnter} />
+                    <Input ref={this.refDetails} onChange={this.handleInput('details')} autoFocus value={details} onPressEnter={this.handleSubmit} />
                 </Col>
             </Row>
 
-            <Row gutter={24} align="middle">
-                <Col span={8}>
-                    <h3>金额</h3>
-                </Col>
-                <Col span={16}>
-                    <Input ref={this.refNum} onChange={this.handleInput('num')} value={num} onPressEnter={this.handleSubmit} />
-                </Col>
-            </Row>
 
-            <Row gutter={24} align="middle" justify="center" style={{ marginTop: '10px' }}>
+            <Row gutter={24} align="middle" justify="center" style={{ marginTop: '24px' }}>
                 <Button type="primary" onClick={this.handleSubmit}>录入</Button>
             </Row>
 

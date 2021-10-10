@@ -1,9 +1,20 @@
 @import '~antd/dist/antd.css';
 
+h3 {
+    margin: 0;
+}
+
 .Entering {
     padding: 0 12px;
 }
 
 .ant-list-header {
     padding-top: 0;
+}
+
+.Setting {
+    font-size: 24px;
+    /* margin-left: auto; */
+    /* display: block; */
+    margin-left: calc(100% - 48px);
 }

@@ -1,5 +1,8 @@
 import React from 'react'
-import { Button, Col, List, message, Modal, Row } from 'antd';
+import { Button, Col, List, message, Modal, Row, Statistic } from 'antd';
+import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
 
 
 export default class Bill extends React.PureComponent {
@@ -8,7 +11,7 @@ export default class Bill extends React.PureComponent {
 
         this.state = {
             data: [],
-            isModalVisible: false
+            isShowSetting: true
         }
     }
 
@@ -33,6 +36,14 @@ export default class Bill extends React.PureComponent {
         this.setState({ data })
     }
 
+    getMax = () => {
+        return this.state.data.reduce((r, i) => {
+            const money = i.split('@')[2]
+            r += eval(money)
+            return r
+        }, 0)
+    }
+
     handleCopy = () => {
         const input = document.createElement("input"); // 直接构建input
         input.value = this._getData().map(i => `"${i}"`).join(','); // 设置内容
@@ -52,25 +63,46 @@ export default class Bill extends React.PureComponent {
     }
 
     clearAll = () => {
-        this.setState({
-            isModalVisible: true
-        })
+        confirm({
+            title: '确定要清空吗?',
+            icon: <ExclamationCircleOutlined />,
+            content: '清空后将无法恢复',
+            maskClosable: true,
+            onOk: () => {
+                return new Promise((resolve) => {
+                    localStorage.setItem('MBD', '')
+                    this.setState({ data: [] })
+                    resolve()
+                })
+            }
+        });
     }
 
-    handleOk = () => {
-        localStorage.setItem('MBD', '')
-        this.setState({ data: [] })
-        this.close()
+    handleItem = (item, index) => {
+        // console.log('item, index', item, index)
+        confirm({
+            title: '您要删除该条数据吗?',
+            icon: <ExclamationCircleOutlined />,
+            content: '清空后将无法恢复',
+            maskClosable: true,
+            onOk: () => {
+                return new Promise((resolve) => {
+                    const { data } = this.state
+                    data.splice(index, 1)
+                    localStorage.setItem('MBD', JSON.stringify(data))
+                    this.setState({ data: [...data] })
+                    resolve()
+                })
+            }
+        });
     }
 
-    close = () => this.setState({ isModalVisible: false })
-
-    render() {
-        const { data, isModalVisible } = this.state
-        return <div>
-            <List
-                size="large"
-                header={<Row gutter={24} align="middle" justify="space-around">
+    renderHeader = () => {
+        const { data, isShowSetting } = this.state
+        return <header>
+            {isShowSetting ?
+                <SettingOutlined className="Setting" onClick={() => this.setState({ isShowSetting: !this.state.isShowSetting })} /> :
+                <Row gutter={24} align="middle" justify="space-around">
                     <Col>
                         <Button type="primary" onClick={this.clearAll} disabled={data.length === 0}>全部清空</Button>
                     </Col>
@@ -78,15 +110,38 @@ export default class Bill extends React.PureComponent {
                         <Button type="primary" onClick={this.handleCopy} disabled={data.length === 0}>复制</Button>
                     </Col>
                 </Row>}
-                // footer={<div>我是Footer</div>}
+
+            {data.length !== 0 && <Row gutter={24} style={{ margin: '24px 0 0 0', padding: '0 24px' }}>
+                <Col style={{ padding: 0 }} span={8}><h3>日期</h3></Col>
+                <Col style={{ padding: 0 }} span={8}><h3>详情</h3></Col>
+                <Col style={{ padding: 0 }} span={8}><h3>金额</h3></Col>
+            </Row>}
+        </header>
+    }
+
+    renderItem = (item, index) => {
+        const [date, details, num] = item.split('@')
+        return <List.Item onClick={this.handleItem.bind(this, item, index)}>
+            {/* <Row gutter={24} align="middle"> */}
+            <Col span={8}>{date}</Col>
+            <Col span={8}>{details}</Col>
+            <Col span={8}>{num}</Col>
+            {/* </Row> */}
+        </List.Item>
+    }
+
+    render() {
+        const { data } = this.state
+        return <div>
+            <List
+                size="large"
+                header={this.renderHeader()}
+                footer={<div style={{ margin: '0 24px' }}><Statistic title="总记" value={this.getMax()} /></div>}
                 // bordered
                 dataSource={data}
-                renderItem={item => <List.Item>{item}</List.Item>}
+                rowKey={item => item}
+                renderItem={this.renderItem}
             />
-
-            <Modal title="Basic Modal" visible={isModalVisible} onCancel={this.close} onOk={this.handleOk}>
-                <p>确定要清空吗</p>
-            </Modal>
         </div>
     }
 }
