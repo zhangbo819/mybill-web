@@ -72,13 +72,13 @@ export default class Bill extends React.PureComponent {
                 size="large"
                 header={<Row gutter={24} align="middle" justify="space-around">
                     <Col>
-                        <Button type="primary" onClick={this.clearAll}>全部清空</Button>
+                        <Button type="primary" onClick={this.clearAll} disabled={data.length === 0}>全部清空</Button>
                     </Col>
                     <Col>
-                        <Button type="primary" onClick={this.handleCopy}>复制</Button>
+                        <Button type="primary" onClick={this.handleCopy} disabled={data.length === 0}>复制</Button>
                     </Col>
                 </Row>}
-                footer={<div>Footer</div>}
+                // footer={<div>我是Footer</div>}
                 // bordered
                 dataSource={data}
                 renderItem={item => <List.Item>{item}</List.Item>}

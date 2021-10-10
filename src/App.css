@@ -1,1 +1,9 @@
 @import '~antd/dist/antd.css';
+
+.Entering {
+    padding: 0 12px;
+}
+
+.ant-list-header {
+    padding-top: 0;
+}
