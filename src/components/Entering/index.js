@@ -23,6 +23,11 @@ export default class Entering extends React.PureComponent {
         this.refNum.current.focus()
     }
 
+    handleDatePickerChange = (e, s) => {
+        // console.log(e.format(), s)
+        this.setState({ date: new Date(e.format()) })
+    }
+
     handleSubmit = () => {
         const { date, details, num } = this.state
 
@@ -75,7 +80,7 @@ export default class Entering extends React.PureComponent {
                     <h3>日期</h3>
                 </Col>
                 <Col span={16}>
-                    <DatePicker value={moment(date)} />
+                    <DatePicker value={moment(date)} onChange={this.handleDatePickerChange} />
                 </Col>
             </Row>
 
