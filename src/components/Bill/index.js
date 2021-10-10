@@ -59,6 +59,7 @@ export default class Bill extends React.PureComponent {
 
     handleOk = () => {
         localStorage.setItem('MBD', '')
+        this.setState({ data: [] })
         this.close()
     }
 
