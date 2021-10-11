@@ -39,7 +39,12 @@ export default class Bill extends React.PureComponent {
     getMax = () => {
         return this.state.data.reduce((r, i) => {
             const money = i.split('@')[2]
-            r += eval(money)
+            try {
+                r += eval(money)
+            } catch (err) {
+                console.log(err, i)
+                r += 0
+            }
             return r
         }, 0)
     }
