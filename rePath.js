@@ -6,10 +6,15 @@ const targetFile = './docs/index.html'
 const host = 'https://zhangbo819.github.io/mybill-web/'
 
 fs.readFile(targetFile, 'utf-8', (err, data) => {
-    console.log(err, data)
-
+    if (err) {
+        console.log(err)
+        return
+    }
+    
     data = data.replace(/\/static\//ig, host + 'static/')
-        .replace('/manifest.json', host + 'manifest.json')
+    .replace('/manifest.json', host + 'manifest.json')
+    
+    console.log(data)
 
     fs.writeFile(targetFile, data, function () { })
 })
