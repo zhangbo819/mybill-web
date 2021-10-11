@@ -16,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "publish": "npm run build && cp -rf build/* docs && node rePath.js && git commit -m 'publish' && git push",
+    "publish": "npm run build && cp -rf build/* docs && node rePath.js && git add . && git commit -m 'publish' && git push",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
