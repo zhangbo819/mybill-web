@@ -98,7 +98,7 @@ export default class Entering extends React.PureComponent {
                     <h3>金额</h3>
                 </Col>
                 <Col span={16}>
-                    <InputNumber ref={this.refNum} onChange={this.handleInput('num')} value={num} onPressEnter={this.onPressEnter} />
+                    <InputNumber ref={this.refNum} onChange={this.handleInput('num')} value={num} onPressEnter={this.onPressEnter} autoFocus />
                 </Col>
             </Row>
 
@@ -107,7 +107,7 @@ export default class Entering extends React.PureComponent {
                     <h3>详情</h3>
                 </Col>
                 <Col span={16}>
-                    <Input ref={this.refDetails} onChange={this.handleInput('details')} autoFocus value={details} onPressEnter={this.handleSubmit} />
+                    <Input ref={this.refDetails} onChange={this.handleInput('details')} value={details} onPressEnter={this.handleSubmit} />
                 </Col>
             </Row>
 
