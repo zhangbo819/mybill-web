@@ -27,7 +27,7 @@ function App() {
         </TabPane>
       </Tabs>
 
-      <a style={{ position: 'absolute', bottom: '24px', left: '24px' }} href="">github 地址</a>
+      <a style={{ position: 'absolute', bottom: '24px', left: '24px' }} href="https://github.com/zhangbo819/code_Resource/blob/master/README.md">github 地址</a>
     </div>
   );
 }
