@@ -26,6 +26,8 @@ function App() {
           <Bill ref={refBill} />
         </TabPane>
       </Tabs>
+
+      <a style={{ position: 'absolute', bottom: '24px', left: '24px' }} href="">github 地址</a>
     </div>
   );
 }
