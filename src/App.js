@@ -17,7 +17,7 @@ function App() {
     }
   }
   return (
-    <div>
+    <div style={{ 'padding-bottom': '24px' }}>
       <Tabs defaultActiveKey="1" centered onChange={onChange}>
         <TabPane tab="录入" key="1">
           <Entering />
