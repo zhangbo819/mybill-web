@@ -46,7 +46,7 @@ export default class Entering extends React.PureComponent {
             return
         }
 
-        let data = localStorage.getItem('MBD')
+        let data = localStorage.getItem(this.props.storeKey)
 
         try {
             data = JSON.parse(data)
@@ -62,7 +62,7 @@ export default class Entering extends React.PureComponent {
 
         data.push(`${date.getMonth() + 1}.${date.getDate()}@${details}@${num}`)
 
-        localStorage.setItem('MBD', JSON.stringify(data))
+        localStorage.setItem(this.props.storeKey, JSON.stringify(data))
 
         message.success({
             // top: 500,
@@ -115,6 +115,8 @@ export default class Entering extends React.PureComponent {
             <Row gutter={24} align="middle" justify="center" style={{ marginTop: '24px' }}>
                 <Button type="primary" onClick={this.handleSubmit}>录入</Button>
             </Row>
+
+            {/* <a style={{ position: 'absolute', bottom: '24px', left: '24px' }} href="https://github.com/zhangbo819/code_Resource/blob/master/README.md">github 地址</a> */}
 
         </div >
     }

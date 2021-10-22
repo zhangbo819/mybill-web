@@ -20,7 +20,7 @@ export default class Bill extends React.PureComponent {
     }
 
     _getData() {
-        let data = localStorage.getItem('MBD')
+        let data = localStorage.getItem(this.props.storeKey)
 
         try {
             data = JSON.parse(data).reverse()
@@ -75,7 +75,7 @@ export default class Bill extends React.PureComponent {
             maskClosable: true,
             onOk: () => {
                 return new Promise((resolve) => {
-                    localStorage.setItem('MBD', '')
+                    localStorage.setItem(this.props.storeKey, '')
                     this.setState({ data: [] })
                     resolve()
                 })
@@ -94,7 +94,7 @@ export default class Bill extends React.PureComponent {
                 return new Promise((resolve) => {
                     const { data } = this.state
                     data.splice(index, 1)
-                    localStorage.setItem('MBD', JSON.stringify(data))
+                    localStorage.setItem(this.props.storeKey, JSON.stringify(data))
                     this.setState({ data: [...data] })
                     resolve()
                 })
