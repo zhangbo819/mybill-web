@@ -51,7 +51,7 @@ export default class Bill extends React.PureComponent {
 
     handleCopy = () => {
         const input = document.createElement("input"); // 直接构建input
-        input.value = this._getData().map(i => `"${i}"`).join(','); // 设置内容
+        input.value = this._getData().map(i => `"${i}"`).reverse().join(','); // 设置内容
         document.body.appendChild(input); // 添加临时实例
         input.select(); // 选择实例内容
         document.execCommand("Copy"); // 执行复制
