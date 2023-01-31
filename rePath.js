@@ -11,7 +11,7 @@ fs.readFile(targetFile, 'utf-8', (err, data) => {
         return
     }
     
-    data = data.replace(/\/static\//ig, host + 'static/')
+    data = data.replace(/\/assets\//ig, host + 'assets/')
     .replace('/manifest.json', host + 'manifest.json')
     
     console.log(data)
